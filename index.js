@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 //   res.send("GET Request Called");
 //   })
 
-  app.use('/api', routes);
+  app.use('/', routes);
 
 
 }
