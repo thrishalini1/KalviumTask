@@ -93,12 +93,12 @@ router.get('/:expression*',async (req,res) => {
     
     const allHistory = await History.find({});
     const totalHistoryCount = allHistory.length;
-      
-    if (totalHistoryCount > 20) {
-          const lastRecord = allHistory[allHistory.length - 1];
-          await History.deleteOne({ _id: lastRecord._id });
-    }
 
+    if (totalHistoryCount > 20) {
+          const firstRecord = allHistory[0];
+          await History.deleteOne({ _id: firstRecord._id });
+    }
+    console.log(roundedResult)
     res.json({ question:p, answer:roundedResult });
     // res.json('works')
 })
