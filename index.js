@@ -5,8 +5,7 @@ const router = express.Router();
 const PORT = 3000;
 const mongoose = require('mongoose');
 const cors = require('cors');
-
-
+const routes = require('./routes'); 
 app.use(cors())
 async function boom()
 {
@@ -28,9 +27,11 @@ app.use(bodyParser.json());
   //   next();
   //  });
 
-  app.get('/test', (req, res) => {
-  res.send("GET Request Called");
-  })
+//   app.get('/test', (req, res) => {
+//   res.send("GET Request Called");
+//   })
+
+  app.use('/api', routes);
 
 
 }
