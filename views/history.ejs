@@ -1,0 +1,20 @@
+<!-- views/history.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History</title>
+</head>
+<body>
+<h1>History of Operations</h1>
+<ul>
+  <% for (let i = history.length - 1; i >= 0; i--) { %>
+    <li>
+      <strong>Question:</strong> <%= history[i].question %>,
+      <strong>Answer:</strong> <%= history[i].answer %>
+    </li>
+  <% } %>
+</ul>
+</body>
+</html>

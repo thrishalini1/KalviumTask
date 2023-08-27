@@ -3,9 +3,11 @@ const router = express.Router();
 const History = require('./model');
 const path = require('path');
 
-router.get('/', (res) => {
+
+
+router.get('/', (req,res) => {
     try{
-        const filePath = path.join(__dirname, 'list.html');
+        const filePath = path.join(__dirname, 'views/list.html');
         res.sendFile(filePath);
     }
     catch{
@@ -14,8 +16,20 @@ router.get('/', (res) => {
 
 })
 
+router.get('/history',async(req,res)=>{
+    try{
+        const allHistory = await History.find({});
+        res.render('history', { history: allHistory });
+        // res.send(allHistory)
+    }
+    catch(err){
+        console.error('Caught error:', err.message);
+        res.status(500).json({"messsage":"Something went wrong. oops!"});
+    }
+
+})
+
 router.get('/:expression*',async (req,res) => {
-    // const expression = req.params.expression;
     const expression = req.params.expression + req.params[0];
     console.log(expression);
 

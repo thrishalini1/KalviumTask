@@ -6,6 +6,7 @@ const PORT = 3000;
 const mongoose = require('mongoose');
 const cors = require('cors');
 const routes = require('./routes'); 
+const path = require('path')
 app.use(cors())
 async function boom()
 {
@@ -22,6 +23,9 @@ async function boom()
   });
 
 app.use(bodyParser.json());
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
   // app.use((req, res, next) => {
   //   req.database = getDatabase();
   //   next();
