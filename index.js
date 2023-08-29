@@ -8,7 +8,8 @@ const cors = require('cors');
 const routes = require('./routes'); 
 const path = require('path')
 app.use(cors())
-async function boom()
+
+async function start()
 {
 
   // await connectMongoDB();
@@ -40,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 }
 
-boom();
+start();
 
 app.listen(PORT, function (err) {
     if (err) console.log(err);

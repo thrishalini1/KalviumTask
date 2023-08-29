@@ -30,10 +30,11 @@ router.get('/history',async(req,res)=>{
 })
 
 router.get('/:expression*',async (req,res) => {
+    try{
     const expression = req.params.expression + req.params[0];
     console.log(expression);
 
-    let t =''
+    let temp =''
     let p=''
     for(let i=0;i<expression.length;i++){
         if(expression[i]=='/'){
@@ -41,11 +42,11 @@ router.get('/:expression*',async (req,res) => {
         }
         else if(expression[i+1]!='/'&&i!=(expression.length-1))
             {
-                t+=expression[i];
+                temp+=expression[i];
             }
         else if(expression[i+1]=='/'||i==(expression.length-1)){
-                t+=expression[i]
-                switch(t){
+                temp+=expression[i]
+                switch(temp){
                     case "into":
                         p+="*";
                         break;
@@ -75,15 +76,22 @@ router.get('/:expression*',async (req,res) => {
                         break;
 
                     default:
-                        p+=t;
+                        p+=temp;
                 }
-                t='';
+                temp='';
         }
         
     }
 
     console.log(p);
-    const result = eval(p);
+    let result;
+    try{
+    result = eval(p);
+    }
+    catch{
+        res.status(400).json({message:"please enter calculatable expression"})
+        return;
+    }
     
     const roundedResult = parseFloat(result.toFixed(3));
     History.insertMany({
@@ -99,7 +107,11 @@ router.get('/:expression*',async (req,res) => {
           await History.deleteOne({ _id: firstRecord._id });
     }
     console.log(roundedResult)
-    res.json({ question:p, answer:roundedResult });
+    res.status(200).json({ question:p, answer:roundedResult });
+}
+catch(error){
+    res.status(500).json({message:"Something went wrong. oops!"})
+}
     // res.json('works')
 })
 
